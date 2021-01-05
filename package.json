@@ -2,7 +2,12 @@
 	"name": "json-to-java-stack-trace",
 	"displayName": "json to java stack-trace",
 	"description": "Convert a Json Exception to java stack-trace",
+	"publisher" : "pedrolopixn",
 	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pedrolopix/json-to-java-stack-trace.git"
+	  },
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -24,7 +29,8 @@
 	"scripts": {
 		"lint": "eslint .",
 		"pretest": "npm run lint",
-		"test": "node ./test/runTest.js"
+		"test": "node ./test/runTest.js",
+		"install-extension": "vsce package  && code --install-extension json-to-java-stack-trace-0.0.1.vsix"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.52.0",

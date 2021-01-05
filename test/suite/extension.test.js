@@ -17,13 +17,12 @@ suite("Extension Tests", function() {
 	    '			"class": "java.time.format.DateTimeFormatter",'+
 		'		"method": "parseResolved0",'+
 		'		"line": 2046'+
-		'+	}]}';
+		'	}]}';
     myExtension.toStackTrace(json, (err, stacktrace) => {
       assert.ok(stacktrace);
       assert.equal(stacktrace, 'Text 400-01-02T03:53:00+00:00 could not be parsed at index 0: java.time.format.DateTimeParseException\n'+
-	  'at java.time.format.DateTimeFormatter.parseResolved0(DateTimeFormatter.java:2046)');
+	  'at java.time.format.DateTimeFormatter.parseResolved0(DateTimeFormatter.java:2046)\n');
 	  
     });
   });
-
 });
