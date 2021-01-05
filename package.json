@@ -30,7 +30,7 @@
 		"lint": "eslint .",
 		"pretest": "npm run lint",
 		"test": "node ./test/runTest.js",
-		"install": "vsce package  && code --install-extension json-to-java-stack-trace-0.0.1.vsix"
+		"install-extension": "vsce package  && code --install-extension json-to-java-stack-trace-0.0.1.vsix"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.52.0",
