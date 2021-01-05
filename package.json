@@ -2,7 +2,7 @@
 	"name": "json-to-java-stack-trace",
 	"displayName": "json to java stack-trace",
 	"description": "Convert a Json Exception to java stack-trace",
-	"publisher" : "pedrolopixn",
+	"publisher" : "pedrolopix",
 	"version": "0.0.1",
 	"repository": {
 		"type": "git",
