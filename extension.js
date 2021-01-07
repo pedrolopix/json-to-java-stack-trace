@@ -50,6 +50,9 @@ function getJavaName(className) {
 const toStackTrace = (text, callback) => {
   try {
     let json = JSON.parse(text);
+    if (json["_source"] && json["_source"]["json.exception"]) {
+      json = json["_source"]["json.exception"];
+    } else
     if (json.exception) {
     	json = json.exception;
 		}

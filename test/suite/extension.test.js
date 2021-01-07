@@ -6,40 +6,66 @@ const assert = require("assert");
 const myExtension = require("../../extension.js");
 
 // Defines a Mocha test suite to group tests of similar kind together
-suite("Extension Tests", function() {
+suite("Extension Tests", function () {
   test("Should convert JSON to Stacktrace", () => {
-    const json = '{'+
-		'"refId": 1,'+
-		'"exceptionType": "java.time.format.DateTimeParseException",'+
-		'"message": "Text 400-01-02T03:53:00+00:00 could not be parsed at index 0",'+
-		'"frames": ['+
-		'	{'+
-	    '			"class": "java.time.format.DateTimeFormatter",'+
-		'		"method": "parseResolved0",'+
-		'		"line": 2046'+
-		'	}]}';
+    const json = '{' +
+        '"refId": 1,' +
+        '"exceptionType": "java.time.format.DateTimeParseException",' +
+        '"message": "Text 400-01-02T03:53:00+00:00 could not be parsed at index 0",'
+        +
+        '"frames": [' +
+        '	{' +
+        '			"class": "java.time.format.DateTimeFormatter",' +
+        '		"method": "parseResolved0",' +
+        '		"line": 2046' +
+        '	}]}';
     myExtension.toStackTrace(json, (err, stacktrace) => {
       assert.ok(stacktrace);
-      assert.equal(stacktrace, 'Text 400-01-02T03:53:00+00:00 could not be parsed at index 0: java.time.format.DateTimeParseException\n'+
-	  'at java.time.format.DateTimeFormatter.parseResolved0(DateTimeFormatter.java:2046)\n');
-	  
+      assert.equal(stacktrace,
+          'Text 400-01-02T03:53:00+00:00 could not be parsed at index 0: java.time.format.DateTimeParseException\n'
+          +
+          'at java.time.format.DateTimeFormatter.parseResolved0(DateTimeFormatter.java:2046)\n');
+
     });
   });
   test("Should convert JSON to Stacktrace", () => {
-    const json = '{"exception":{'+
-		'"refId": 1,'+
-		'"exceptionType": "java.time.format.DateTimeParseException",'+
-		'"message": "Text 400-01-02T03:53:00+00:00 could not be parsed at index 0",'+
-		'"frames": ['+
-		'	{'+
-	    '			"class": "java.time.format.DateTimeFormatter",'+
-		'		"method": "parseResolved0",'+
-		'		"line": 2046'+
-		'	}]}}';
+    const json = '{"exception":{' +
+        '"refId": 1,' +
+        '"exceptionType": "java.time.format.DateTimeParseException",' +
+        '"message": "Text 400-01-02T03:53:00+00:00 could not be parsed at index 0",'
+        +
+        '"frames": [' +
+        '	{' +
+        '			"class": "java.time.format.DateTimeFormatter",' +
+        '		"method": "parseResolved0",' +
+        '		"line": 2046' +
+        '	}]}}';
     myExtension.toStackTrace(json, (err, stacktrace) => {
       assert.ok(stacktrace);
-      assert.equal(stacktrace, 'Text 400-01-02T03:53:00+00:00 could not be parsed at index 0: java.time.format.DateTimeParseException\n'+
-	  'at java.time.format.DateTimeFormatter.parseResolved0(DateTimeFormatter.java:2046)\n');
+      assert.equal(stacktrace,
+          'Text 400-01-02T03:53:00+00:00 could not be parsed at index 0: java.time.format.DateTimeParseException\n'
+          +
+          'at java.time.format.DateTimeFormatter.parseResolved0(DateTimeFormatter.java:2046)\n');
+    });
+  });
+  test("Should convert JSON to Stacktrace", () => {
+    const json = '{"_source": {"json.exception":{' +
+        '"refId": 1,' +
+        '"exceptionType": "java.time.format.DateTimeParseException",' +
+        '"message": "Text 400-01-02T03:53:00+00:00 ' +
+        'could not be parsed at index 0",'+
+        '"frames": [' +
+        '	{' +
+        '			"class": "java.time.format.DateTimeFormatter",' +
+        '		"method": "parseResolved0",' +
+        '		"line": 2046' +
+        '	}]}}}';
+    myExtension.toStackTrace(json, (err, stacktrace) => {
+      assert.ok(stacktrace);
+      assert.equal(stacktrace,
+          'Text 400-01-02T03:53:00+00:00 could not be parsed at index 0: java.time.format.DateTimeParseException\n'
+          +
+          'at java.time.format.DateTimeFormatter.parseResolved0(DateTimeFormatter.java:2046)\n');
 
     });
   });
