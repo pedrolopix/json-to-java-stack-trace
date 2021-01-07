@@ -38,13 +38,25 @@ function convertSelection(conversionFn) {
 }
 
 function getJavaName(className) {
-  let ret = className.split("@");
+  let ret = className.split("$");
   if (ret && ret.length > 0) {
     ret = ret[0].split(".")
     return ret[ret.length - 1] + ".java";
   } else {
     return className;
   }
+}
+
+function getStackTrace(json) {
+  let ret = json.message + ": " + json.exceptionType + "\n";
+  json.frames.forEach(element => {
+    let javafile = getJavaName(element.class);
+    ret += "at " +
+        element.class + "." +
+        element.method +
+        "(" + javafile + ":" + element.line + ")\n";
+  });
+  return ret;
 }
 
 const toStackTrace = (text, callback) => {
@@ -56,14 +68,11 @@ const toStackTrace = (text, callback) => {
     if (json.exception) {
     	json = json.exception;
 		}
-    let ret = json.message + ": " + json.exceptionType + "\n";
-    json.frames.forEach(element => {
-      let javafile = getJavaName(element.class);
-      ret += "at " +
-					element.class + "." +
-					element.method +
-					"(" + javafile + ":" + element.line + ")\n";
-    });
+    let ret = getStackTrace(json);
+    if (json["causedBy"] && json["causedBy"]["exception"]) {
+      ret += "causedBy: \n";
+      ret += getStackTrace(json["causedBy"]["exception"]);
+    }
     callback(null, ret);
   } catch (e) {
     vscode.window.showErrorMessage("Could not parse the selection as JSON.");
@@ -90,6 +99,7 @@ function deactivate() {
 }
 
 module.exports = {
+  getJavaName,
   toStackTrace,
   activate,
   deactivate
